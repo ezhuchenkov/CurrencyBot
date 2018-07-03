@@ -22,9 +22,7 @@ public class ExchangeBot extends TelegramLongPollingBot {
         String message_text = update.getMessage().getText();
         String user_first_name = update.getMessage().getChat().getFirstName();
         String user_last_name = update.getMessage().getChat().getLastName();
-        String user_username = update.getMessage().getChat().getUserName();
         long user_id = update.getMessage().getChat().getId();
-        long chat_id = update.getMessage().getChatId();
         if (message != null && message.hasText()) {
             if (valueLoader.hasMatch(message_text.toUpperCase()) || valueLoader.hasMatch(message_text)) {
                 sendMsg(message, valueLoader.getValue(message_text.toUpperCase()));
