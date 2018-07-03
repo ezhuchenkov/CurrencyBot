@@ -20,16 +20,21 @@ public class ExchangeBot extends TelegramLongPollingBot {
     public void onUpdateReceived(Update update) {
         Message message = update.getMessage();
         String message_text = update.getMessage().getText();
+        String user_first_name = update.getMessage().getChat().getFirstName();
+        String user_last_name = update.getMessage().getChat().getLastName();
+        String user_username = update.getMessage().getChat().getUserName();
+        long user_id = update.getMessage().getChat().getId();
+        long chat_id = update.getMessage().getChatId();
         if (message != null && message.hasText()) {
-            if (valueLoader.hasMatch(message_text)) {
-                sendMsg(message, valueLoader.getValue(message_text));
+            if (valueLoader.hasMatch(message_text.toUpperCase()) || valueLoader.hasMatch(message_text)) {
+                sendMsg(message, valueLoader.getValue(message_text.toUpperCase()));
             } else {
                 sendMsg(message, "Привет, я Currency bot. Напиши мне одну из следующих валют: " +
-                        " AUD, AZN, GBP, AMD, BYN, BGN, BRL, HUF, HKD, DKK, USD, EUR, INR, KZT, CAD, KGS, CNY, MDL, NOK," +
+                        "\n AUD, AZN, GBP, AMD, BYN, BGN, BRL, HUF, HKD, DKK, USD, EUR, INR, KZT, CAD, KGS, CNY, MDL, NOK," +
                         " PLN, RON, XDR, SGD, TJS, TRY, TMT, UZS, UAH, CZK, SEK, CHF, ZAR, KRW, JPY" +
-                        " и я верну её курс в рублях");
-
+                        "\n и я верну её курс в рублях");
             }
+            log(user_first_name, user_last_name, Long.toString(user_id), message_text);
         }
     }
 
@@ -61,12 +66,11 @@ public class ExchangeBot extends TelegramLongPollingBot {
         super(options);
     }
 
-    private void log(String first_name, String last_name, String user_id, String txt, String bot_answer) {
+    private void log(String first_name, String last_name, String user_id, String txt) {
         System.out.println("\n ----------------------------");
         DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
         Date date = new Date();
         System.out.println(dateFormat.format(date));
         System.out.println("Message from " + first_name + " " + last_name + ". (id = " + user_id + ") \n Text - " + txt);
-        System.out.println("Bot answer: \n Text - " + bot_answer);
     }
 }
