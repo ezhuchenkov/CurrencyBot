@@ -14,20 +14,20 @@ import java.util.Date;
 public class ExchangeBot extends TelegramLongPollingBot {
 
     private final ValueLoader valueLoader = new ValueLoader();
-    private long chat_id;
+
 
     @Override
     public void onUpdateReceived(Update update) {
         Message message = update.getMessage();
         String message_text = update.getMessage().getText();
-        chat_id = update.getMessage().getChatId();
-        String answer = message_text;
         if (message != null && message.hasText()) {
-            if (message.getText().equals("/help")) {
-                sendMsg(message, "Привет, я Currency bot.");
+            if (valueLoader.hasMatch(message_text)) {
+                sendMsg(message, valueLoader.getValue(message_text));
             } else {
-                String value = valueLoader.getValue(message_text);
-                sendMsg(message, value);
+                sendMsg(message, "Привет, я Currency bot. Напиши мне одну из следующих валют: " +
+                        " AUD, AZN, GBP, AMD, BYN, BGN, BRL, HUF, HKD, DKK, USD, EUR, INR, KZT, CAD, KGS, CNY, MDL, NOK," +
+                        " PLN, RON, XDR, SGD, TJS, TRY, TMT, UZS, UAH, CZK, SEK, CHF, ZAR, KRW, JPY" +
+                        " и я верну её курс в рублях");
 
             }
         }
@@ -45,7 +45,7 @@ public class ExchangeBot extends TelegramLongPollingBot {
     }
 
     private void sendMsg(Message message, String text) {
-        SendMessage sendMessage = new SendMessage().setChatId(chat_id);
+        SendMessage sendMessage = new SendMessage();
         sendMessage.enableMarkdown(true);
         sendMessage.setChatId(message.getChatId().toString());
         sendMessage.setReplyToMessageId(message.getMessageId());
