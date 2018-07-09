@@ -46,7 +46,7 @@ public class ValueLoader {
         return key.toString();
     }
 
-    public boolean hasMatch (String s){
+    public boolean hasMatch(String s) {
         return m.map.containsKey(s);
     }
 

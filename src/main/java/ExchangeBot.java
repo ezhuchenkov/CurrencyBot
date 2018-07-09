@@ -9,7 +9,6 @@ import org.telegram.telegrambots.bots.DefaultBotOptions;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.exceptions.TelegramApiException;
 
-import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -29,8 +28,8 @@ public class ExchangeBot extends TelegramLongPollingBot {
         String user_last_name = update.getMessage().getChat().getLastName();
         long user_id = update.getMessage().getChat().getId();
         if (message != null && message.hasText()) {
-            if (valueLoader.hasMatch((String) message_text.toUpperCase().subSequence(0,3))) {
-                sendMsg(message, valueLoader.getValue((String) message_text.toUpperCase().subSequence(0,3)));
+            if (valueLoader.hasMatch((String) message_text.toUpperCase().subSequence(0, 3))) {
+                sendMsg(message, valueLoader.getValue((String) message_text.toUpperCase().subSequence(0, 3)));
             } else {
                 sendMsg(message, "Привет, я Currency bot. Напиши мне одну из следующих валют: " +
                         "\n AUD, AZN, GBP, AMD, BYN, BGN, BRL, HUF, HKD, DKK, USD, EUR, INR, KZT, CAD, KGS, CNY, MDL, NOK," +
@@ -72,8 +71,8 @@ public class ExchangeBot extends TelegramLongPollingBot {
         // Первая строчка клавиатуры
         KeyboardRow keyboardFirstRow = new KeyboardRow();
         // Добавляем кнопки в первую строчку клавиатуры
-        keyboardFirstRow.add(EmojiParser.parseToUnicode ("USD "+"\uD83C\uDDFA\uD83C\uDDF8"));
-        keyboardFirstRow.add(EmojiParser.parseToUnicode ("EUR "+ "\uD83C\uDDEA\uD83C\uDDFA"));
+        keyboardFirstRow.add(EmojiParser.parseToUnicode("USD " + "\uD83C\uDDFA\uD83C\uDDF8"));
+        keyboardFirstRow.add(EmojiParser.parseToUnicode("EUR " + "\uD83C\uDDEA\uD83C\uDDFA"));
         // Добавляем все строчки клавиатуры в список
         keyboard.add(keyboardFirstRow);
         // и устанваливаем этот список нашей клавиатуре
